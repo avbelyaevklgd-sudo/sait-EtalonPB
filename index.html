@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Эталон-ПБ — Экспертиза в производственной безопасности</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Nunito:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+  /* ═══════════════════════════════════════════
+     БАЙКАЛЬСКИЙ ЛЁД — дизайн-система
+     Прозрачность · Голубовато-зелёные тона · Чистота · Натуральность
+  ═══════════════════════════════════════════ */
+  :root {
+    --ice-white:    #f6fbfd;
+    --ice-pale:     #edf6f9;
+    --ice-blue:     #d8eef5;
+    --ice-mid:      #b4d8e8;
+    --teal:         #2ba49c;
+    --teal-light:   #46bfb8;
+    --teal-dim:     rgba(43,164,156,0.11);
+    --teal-soft:    rgba(43,164,156,0.055);
+    --ink:          #1b3340;
+    --ink-mid:      #3a5868;
+    --ink-soft:     #7899a8;
+    --ink-ghost:    #adc5cf;
+    --surface:      #ffffff;
+    --surface-2:    #f0f8fb;
+    --border:       rgba(43,164,156,0.16);
+    --border-soft:  rgba(100,180,210,0.2);
+    --shadow-sm:    0 2px 14px rgba(30,90,130,0.07);
+    --shadow-md:    0 8px 36px rgba(30,90,130,0.11);
+    --shadow-lg:    0 20px 64px rgba(30,90,130,0.14);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ice-white);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    line-height: 1.65;
+  }
+  /* Фоновое свечение «льда» */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 55% at 10% 5%, rgba(180,216,232,0.28) 0%, transparent 60%),
+      radial-gradient(ellipse 55% 50% at 90% 95%, rgba(43,164,156,0.09) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 40% at 55% 48%, rgba(216,238,245,0.35) 0%, transparent 65%);
+  }
+
+  /* ─── AI БАННЕР ─── */
+  .ai-banner {
+    position: relative; z-index: 10;
+    background: linear-gradient(90deg, transparent, rgba(43,164,156,0.09), transparent);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 9px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    color: var(--teal);
+  }
+  .ai-inner { display: inline-flex; align-items: center; gap: 12px; }
+  .dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: breathe 2.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .dot:last-child { animation-delay: 1.4s; }
+  @keyframes breathe {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:.3; transform:scale(1.7); }
+  }
+
+  /* ─── НАВИГАЦИЯ ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 52px; height: 66px;
+    background: rgba(246,251,253,0.8);
+    backdrop-filter: blur(22px) saturate(1.5);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    border-bottom: 1px solid var(--border-soft);
+    transition: box-shadow .3s, background .3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow-sm); background: rgba(246,251,253,0.95); }
+  .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .nav-logo img {
+    height: 32px; width: auto;
+    filter: invert(42%) sepia(55%) saturate(480%) hue-rotate(148deg) brightness(.9);
+  }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    letter-spacing: .07em; color: var(--ink);
+  }
+  .nav-logo-text em { color: var(--teal); font-style: normal; }
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a {
+    color: var(--ink-mid); text-decoration:none;
+    font-size: .82rem; font-weight: 600; letter-spacing:.03em;
+    transition: color .2s; position:relative;
+  }
+  .nav-links a::after {
+    content:''; position:absolute; bottom:-3px; left:0;
+    width:0; height:1.5px; background:var(--teal); border-radius:2px;
+    transition: width .3s cubic-bezier(.16,1,.3,1);
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links a:hover::after { width:100%; }
+  .nav-cta {
+    font-size: .8rem; font-weight: 700;
+    color: var(--teal); text-decoration:none;
+    background: var(--teal-dim); border: 1.5px solid var(--teal);
+    padding: 9px 22px; border-radius:50px; letter-spacing:.04em;
+    transition: all .25s;
+  }
+  .nav-cta:hover { background:var(--teal); color:#fff; box-shadow:0 4px 18px rgba(43,164,156,.3); }
+
+  /* ─── КОНТЕЙНЕР ─── */
+  .wrap { max-width:1240px; margin:0 auto; padding:0 60px; position:relative; z-index:2; }
+
+  /* ─── REVEAL ─── */
+  .rv {
+    opacity:0; transform:translateY(28px);
+    transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+  }
+  .rv.on { opacity:1; transform:translateY(0); }
+  .rv.d1 { transition-delay:.1s; }
+  .rv.d2 { transition-delay:.2s; }
+  .rv.d3 { transition-delay:.3s; }
+
+  /* ─── ДЕЛИТЕЛЬ ─── */
+  .hr { height:1px; background:linear-gradient(90deg, transparent, var(--border-soft), transparent); margin:0 60px; }
+
+  /* ─── ТИПОГРАФИЯ ─── */
+  .lbl {
+    font-family:'DM Mono',monospace;
+    font-size:.68rem; letter-spacing:.2em; color:var(--teal);
+    text-transform:uppercase; margin-bottom:14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .lbl::before { content:''; width:18px; height:1px; background:var(--teal); flex-shrink:0; }
+  h2.ttl {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2rem,3.8vw,3.5rem);
+    font-weight:400; line-height:1.1; color:var(--ink); margin-bottom:18px;
+  }
+  h2.ttl em { font-style:italic; color:var(--teal); }
+  p.txt {
+    font-size:1rem; color:var(--ink-mid);
+    line-height:1.9; margin-bottom:16px; max-width:540px;
+  }
+  ul.dots {
+    list-style:none; margin-top:22px;
+  }
+  ul.dots li {
+    display:flex; align-items:flex-start; gap:12px;
+    font-size:.92rem; color:var(--ink-mid); line-height:1.7;
+    padding:9px 0; border-bottom:1px solid var(--border-soft);
+  }
+  ul.dots li::before { content:'↗'; color:var(--teal); font-size:.72rem; margin-top:4px; flex-shrink:0; }
+
+  /* ─── КНОПКИ ─── */
+  .btn {
+    display:inline-block; text-decoration:none; border-radius:50px;
+    font-family:'Nunito',sans-serif; font-weight:700; font-size:.85rem;
+    letter-spacing:.04em; transition:all .25s; cursor:pointer; border:none;
+  }
+  .btn-t {
+    background:var(--teal); color:#fff; padding:15px 34px;
+    box-shadow:0 4px 16px rgba(43,164,156,.25);
+  }
+  .btn-t:hover { background:var(--teal-light); transform:translateY(-2px); box-shadow:0 8px 28px rgba(43,164,156,.35); }
+  .btn-g {
+    color:var(--ink-mid); background:rgba(255,255,255,.65);
+    border:1.5px solid var(--border-soft); padding:14px 34px;
+  }
+  .btn-g:hover { border-color:var(--teal); color:var(--teal); background:var(--teal-soft); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height:100vh; display:grid; grid-template-columns:1fr 1fr;
+    align-items:center; position:relative; overflow:hidden;
+  }
+  /* Плавающие «льдинки» */
+  .shard {
+    position:absolute; border-radius:60% 40% 55% 45% / 45% 55% 45% 55%;
+    background:linear-gradient(135deg, rgba(180,216,232,.38), rgba(43,164,156,.1));
+    border:1px solid rgba(100,180,210,.32);
+    pointer-events:none; animation:drift 13s ease-in-out infinite;
+  }
+  .shard:nth-child(1){ width:320px; height:270px; top:6%; right:-50px; }
+  .shard:nth-child(2){ width:170px; height:210px; top:52%; right:37%; animation-delay:-4s; animation-duration:16s; opacity:.6; }
+  .shard:nth-child(3){ width:110px; height:95px; bottom:10%; right:7%; animation-delay:-8s; animation-duration:10s; opacity:.4; }
+  @keyframes drift {
+    0%,100% { transform:translateY(0) rotate(0deg); }
+    33% { transform:translateY(-16px) rotate(1.3deg); }
+    66% { transform:translateY(9px) rotate(-1deg); }
+  }
+  .hero-l { padding:80px 60px 80px 80px; position:relative; z-index:2; }
+  .hero-tag {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'DM Mono',monospace; font-size:.69rem;
+    letter-spacing:.17em; color:var(--teal); text-transform:uppercase;
+    margin-bottom:24px; padding:6px 14px;
+    background:var(--teal-soft); border:1px solid var(--border); border-radius:50px;
+  }
+  .hero-h {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.8rem,5.5vw,5rem); font-weight:300;
+    line-height:1.07; letter-spacing:-.01em; color:var(--ink);
+    margin-bottom:6px;
+  }
+  .hero-h strong { font-weight:600; color:var(--teal); display:block; font-style:italic; }
+  .hero-sub { font-size:1.05rem; color:var(--ink-mid); line-height:1.88; max-width:475px; margin:20px 0 42px; }
+  .hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+  .hero-stats {
+    display:flex; gap:40px; margin-top:50px;
+    padding-top:34px; border-top:1px solid var(--border-soft);
+  }
+  .sn {
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.6rem; font-weight:600; color:var(--teal); line-height:1;
+  }
+  .sl { font-size:.73rem; font-weight:600; letter-spacing:.06em; color:var(--ink-soft); text-transform:uppercase; margin-top:4px; }
+
+  .hero-r { position:relative; height:100vh; overflow:hidden; }
+  .hero-r img { width:100%; height:100%; object-fit:cover; opacity:.72; filter:saturate(.85) brightness(1.04); }
+  .hero-r::before {
+    content:''; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(90deg, var(--ice-white) 0%, rgba(246,251,253,.08) 30%, transparent 60%);
+  }
+  .hero-r::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:180px; z-index:1;
+    background:linear-gradient(0deg, var(--ice-white) 0%, transparent 100%);
+  }
+  .hero-badge {
+    position:absolute; bottom:44px; right:28px; z-index:3;
+    background:rgba(255,255,255,.72); backdrop-filter:blur(12px);
+    border:1px solid var(--border); border-radius:12px;
+    padding:12px 18px;
+    font-family:'DM Mono',monospace; font-size:.66rem; letter-spacing:.1em; color:var(--teal);
+  }
+
+  /* ─── ФОТО-КАРТОЧКА ─── */
+  .pcard { position:relative; border-radius:24px; overflow:hidden; box-shadow:var(--shadow-lg); }
+  .pcard img {
+    width:100%; display:block; border-radius:24px;
+    filter:saturate(.9) brightness(1.03);
+    transition:transform .6s cubic-bezier(.16,1,.3,1), filter .4s;
+  }
+  .pcard:hover img { transform:scale(1.04); filter:saturate(1) brightness(1.06); }
+  .pcard::before {
+    content:''; position:absolute; inset:0; border-radius:24px;
+    border:1px solid rgba(100,180,210,.38); z-index:2; pointer-events:none;
+  }
+  .pbadge {
+    position:absolute; bottom:18px; left:18px; z-index:3;
+    background:rgba(255,255,255,.74); backdrop-filter:blur(10px);
+    border:1px solid var(--border); border-radius:10px;
+    padding:9px 14px;
+    font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.1em; color:var(--teal);
+  }
+
+  /* ─── О КОМПАНИИ ─── */
+  section { padding:96px 0; position:relative; z-index:2; }
+  .g2 { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+
+  /* ─── ПОЛНОШИРИННАЯ ПОЛОСА ─── */
+  .fullband { position:relative; overflow:hidden; height:520px; }
+  .fullband img {
+    width:100%; height:100%; object-fit:cover;
+    filter:saturate(.8) brightness(.96);
+    transition:transform 8s ease;
+  }
+  .fullband:hover img { transform:scale(1.035); }
+  .fullband-ov {
+    position:absolute; inset:0; display:flex; align-items:center;
+    background:linear-gradient(90deg,
+      rgba(246,251,253,.9) 0%,
+      rgba(216,238,245,.76) 35%,
+      rgba(216,238,245,.2) 68%,
+      transparent 100%);
+  }
+  .fullband-ct { max-width:1240px; margin:0 auto; padding:0 60px; position:relative; z-index:2; }
+  .fullband-ct p { font-size:1.05rem; color:var(--ink-mid); line-height:1.88; max-width:490px; margin-bottom:30px; }
+
+  /* ─── СЕРВИСНЫЕ КАРТОЧКИ ─── */
+  .cards-intro { text-align:center; margin-bottom:52px; }
+  .cards-intro .ttl { display:inline-block; }
+  .cgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .sc {
+    border-radius:20px; overflow:hidden; background:var(--surface);
+    border:1px solid var(--border-soft); box-shadow:var(--shadow-sm);
+    transition:transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s;
+    cursor:pointer;
+  }
+  .sc:hover { transform:translateY(-6px); box-shadow:var(--shadow-md); }
+  .sc-img { height:215px; overflow:hidden; }
+  .sc-img img {
+    width:100%; height:100%; object-fit:cover;
+    filter:saturate(.75) brightness(1.05);
+    transition:transform .5s cubic-bezier(.16,1,.3,1), filter .4s;
+  }
+  .sc:hover .sc-img img { transform:scale(1.07); filter:saturate(.9) brightness(1.07); }
+  .sc-body { padding:22px 24px 26px; }
+  .sc-num { font-family:'DM Mono',monospace; font-size:.64rem; letter-spacing:.17em; color:var(--teal); text-transform:uppercase; margin-bottom:7px; }
+  .sc-name { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:500; color:var(--ink); line-height:1.2; margin-bottom:9px; }
+  .sc-desc { font-size:.86rem; color:var(--ink-soft); line-height:1.75; }
+
+  /* ─── ПОСТРОЕНИЕ СИСТЕМЫ ─── */
+  .bld-grid { display:grid; grid-template-columns:1.15fr 1fr; gap:80px; align-items:center; }
+  .bld-img { position:relative; border-radius:24px; overflow:hidden; box-shadow:var(--shadow-lg); }
+  .bld-img img { width:100%; display:block; border-radius:24px; filter:saturate(.88) brightness(1.02); }
+  .bld-img::after {
+    content:''; position:absolute; inset:0; border-radius:24px;
+    background:linear-gradient(135deg, rgba(43,164,156,.06) 0%, transparent 55%);
+    pointer-events:none;
+  }
+
+  /* ─── SPLIT БЛОКИ ─── */
+  .split { display:grid; grid-template-columns:1fr 1fr; min-height:500px; }
+  .split.rev { direction:rtl; }
+  .split.rev > * { direction:ltr; }
+  .sp-img { overflow:hidden; position:relative; }
+  .sp-img img {
+    width:100%; height:100%; object-fit:cover;
+    filter:saturate(.8) brightness(1.04);
+    transition:transform .6s cubic-bezier(.16,1,.3,1), filter .4s;
+  }
+  .sp-img:hover img { transform:scale(1.04); filter:saturate(.9) brightness(1.06); }
+  .sp-body {
+    background:var(--surface-2); display:flex; flex-direction:column; justify-content:center;
+    padding:72px 60px; border-left:1px solid var(--border-soft);
+  }
+  .split.rev .sp-body { border-left:none; border-right:1px solid var(--border-soft); }
+
+  /* ─── CTA БЛОК ─── */
+  .cta-wrap {
+    padding:80px 0; position:relative; overflow:hidden;
+    background:linear-gradient(130deg, var(--ice-pale) 0%, var(--ice-blue) 50%, var(--ice-pale) 100%);
+    border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft);
+  }
+  .cta-wrap::before {
+    content:''; position:absolute; inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232ba49c' fill-opacity='0.045'%3E%3Cpath d='M28 0l4 12h12l-10 7 4 12-10-7-10 7 4-12L2 12h12z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cta-bg-img { position:absolute; right:0; top:0; width:42%; height:100%; overflow:hidden; }
+  .cta-bg-img img { width:100%; height:100%; object-fit:cover; opacity:.16; filter:saturate(.5) brightness(1.2); }
+  .cta-ct { text-align:center; position:relative; z-index:2; max-width:680px; margin:0 auto; padding:0 40px; }
+  .cta-ct .ttl { font-size:clamp(2.2rem,4vw,3.7rem); margin-bottom:18px; }
+  .cta-ct p { font-size:1.05rem; color:var(--ink-mid); line-height:1.88; margin-bottom:34px; }
+  .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  /* ─── ФУТЕР ─── */
+  footer {
+    background:var(--surface); border-top:1px solid var(--border-soft);
+    padding:96px 0 0; position:relative; z-index:2;
+  }
+  footer::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, transparent, var(--teal), var(--ice-mid), var(--teal), transparent);
+  }
+  .fg { display:grid; grid-template-columns:1fr 1fr; gap:80px; }
+  .ft { font-family:'Cormorant Garamond',serif; font-size:clamp(1.9rem,3.4vw,2.9rem); font-weight:400; line-height:1.15; color:var(--ink); margin-bottom:18px; }
+  .ft em { font-style:italic; color:var(--teal); }
+  .fsub { font-size:1rem; color:var(--ink-mid); line-height:1.88; margin-bottom:34px; }
+  .ci { display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--border-soft); }
+  .ctag {
+    font-family:'DM Mono',monospace; font-size:.63rem; letter-spacing:.14em;
+    color:var(--teal); text-transform:uppercase;
+    background:var(--teal-dim); padding:4px 10px; border-radius:50px; min-width:68px; text-align:center;
+  }
+  .cval { font-size:.92rem; color:var(--ink); font-weight:500; }
+
+  /* Форма */
+  .frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+  .fi input, .fi textarea {
+    width:100%; background:var(--ice-pale); border:1.5px solid var(--border-soft);
+    border-radius:12px; padding:14px 18px;
+    font-family:'Nunito',sans-serif; font-size:.9rem; color:var(--ink);
+    outline:none; transition:border-color .2s, box-shadow .2s; resize:none;
+  }
+  .fi input::placeholder, .fi textarea::placeholder { color:var(--ink-ghost); }
+  .fi input:focus, .fi textarea:focus { border-color:var(--teal); box-shadow:0 0 0 3px rgba(43,164,156,.1); background:#fff; }
+  .fsb {
+    width:100%; background:var(--teal); color:#fff;
+    font-family:'Nunito',sans-serif; font-weight:700; font-size:.87rem;
+    letter-spacing:.05em; border:none; padding:17px; border-radius:50px;
+    cursor:pointer; transition:all .25s; margin-top:8px;
+    box-shadow:0 4px 16px rgba(43,164,156,.25);
+  }
+  .fsb:hover { background:var(--teal-light); transform:translateY(-2px); box-shadow:0 8px 28px rgba(43,164,156,.35); }
+  .fbot {
+    margin-top:60px; padding:24px 0; border-top:1px solid var(--border-soft);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:.77rem; color:var(--ink-ghost);
+  }
+
+  /* ─── АДАПТИВ ─── */
+  @media(max-width:1024px){
+    nav { padding:0 24px; }
+    .nav-links { display:none; }
+    .hero { grid-template-columns:1fr; }
+    .hero-r { display:none; }
+    .hero-l { padding:80px 32px; }
+    .g2,.bld-grid,.fg { grid-template-columns:1fr; }
+    .cgrid { grid-template-columns:1fr 1fr; }
+    .split { grid-template-columns:1fr; }
+    .split.rev { direction:ltr; }
+    .sp-img { height:300px; }
+    .wrap { padding:0 32px; }
+    .fullband-ct { padding:0 32px; }
+  }
+  @media(max-width:640px){
+    .cgrid { grid-template-columns:1fr; }
+    .hero-stats { flex-wrap:wrap; gap:22px; }
+    .frow { grid-template-columns:1fr; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- ▸ AI БАННЕР -->
+<div class="ai-banner">
+  <div class="ai-inner">
+    <span class="dot"></span>
+    ИИ РЕШЕНИЯ В ПРОИЗВОДСТВЕННОЙ БЕЗОПАСНОСТИ — ИНТЕЛЛЕКТУАЛЬНЫЙ АНАЛИЗ · ПРЕДИКТИВНЫЙ КОНТРОЛЬ · ЦИФРОВОЙ МОНИТОРИНГ
+    <span class="dot"></span>
+  </div>
+</div>
+
+<!-- ▸ НАВИГАЦИЯ -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">
+    <img src="logo.png" alt="Эталон-ПБ"/>
+    <span class="nav-logo-text">ЭТАЛОН<em>-ПБ</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#build">Система</a></li>
+    <li><a href="#remote">Контроль</a></li>
+    <li><a href="#training">Обучение</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Связаться</a>
+</nav>
+
+<!-- ▸ HERO -->
+<div class="hero" id="hero">
+  <div class="shard"></div>
+  <div class="shard"></div>
+  <div class="shard"></div>
+
+  <div class="hero-l">
+    <div class="hero-tag"><span class="dot"></span>Производственная безопасность</div>
+    <h1 class="hero-h">
+      Решения для<br/>промышленной
+      <strong>безопасности</strong>
+    </h1>
+    <p class="hero-sub">
+      Интеграция глубокой аналитики, жёсткого контроля и экспертных практик для формирования безупречной экосистемы производственной безопасности на объектах любого масштаба.
+    </p>
+    <div class="hero-btns">
+      <a href="#about" class="btn btn-t">Наша методология</a>
+      <a href="#contact" class="btn btn-g">Оставить заявку</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="sn">12+</div><div class="sl">Лет опыта</div></div>
+      <div><div class="sn">300+</div><div class="sl">Объектов</div></div>
+      <div><div class="sn">0</div><div class="sl">Критических инцидентов</div></div>
+    </div>
+  </div>
+
+  <div class="hero-r">
+    <img src="дистанционный_контроль.png" alt="Цифровой мониторинг производства"/>
+    <div class="hero-badge">МОНИТОРИНГ · РЕАЛЬНОЕ ВРЕМЯ</div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ▸ О КОМПАНИИ -->
+<section id="about">
+  <div class="wrap">
+    <div class="g2">
+      <div class="pcard rv">
+        <img src="о_компании.png" alt="О компании Эталон-ПБ"/>
+        <div class="pbadge">ЭТАЛОН-ПБ · ЭКСПЕРТИЗА</div>
+      </div>
+      <div class="rv d1">
+        <div class="lbl">01 — О компании</div>
+        <h2 class="ttl">Мы создаём<br/><em>структуры безопасности</em></h2>
+        <p class="txt">Эталон-ПБ создаёт структурные решения для производственной безопасности на объектах любого масштаба. Мы внедряем культуру ответственности через современные инструменты контроля.</p>
+        <p class="txt">Наша миссия — превратить производственную безопасность из формальной обязанности в реальное конкурентное преимущество вашего бизнеса.</p>
+        <ul class="dots">
+          <li>Экспертная команда с многолетним опытом в отрасли</li>
+          <li>Собственные методологии и проверенные инструменты</li>
+          <li>Работа в связке с вашей командой на каждом этапе</li>
+          <li>Полный цикл — от аудита до стабильной эксплуатации</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ▸ ЦЕНТР УПРАВЛЕНИЯ — полоса -->
+<div class="fullband rv">
+  <img src="о_нас_2.png" alt="Центр управления производственной безопасностью"/>
+  <div class="fullband-ov">
+    <div class="fullband-ct">
+      <div class="lbl">Центр компетенций</div>
+      <h2 class="ttl">Интеллектуальный<br/><em>центр управления</em></h2>
+      <p>Современные технологии мониторинга и контроля обеспечивают непрерывное наблюдение за всеми параметрами безопасности в режиме реального времени.</p>
+      <a href="#contact" class="btn btn-t">Узнать подробнее</a>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ УСЛУГИ -->
+<section id="services">
+  <div class="wrap">
+    <div class="cards-intro rv">
+      <div class="lbl" style="justify-content:center;">02 — Услуги</div>
+      <h2 class="ttl">Наши <em>компетенции</em></h2>
+    </div>
+    <div class="cgrid">
+      <div class="sc rv">
+        <div class="sc-img"><img src="Супервайзинг.png" alt="Супервайзинг"/></div>
+        <div class="sc-body">
+          <div class="sc-num">01 — Supervising</div>
+          <div class="sc-name">Супервайзинг</div>
+          <p class="sc-desc">Независимый контроль на ключевых этапах работ с фиксацией отклонений в реальном времени. Предотвращение инцидентов до их наступления.</p>
+        </div>
+      </div>
+      <div class="sc rv d1">
+        <div class="sc-img"><img src="управление_рисками.png" alt="Управление рисками"/></div>
+        <div class="sc-body">
+          <div class="sc-num">02 — Risk Management</div>
+          <div class="sc-name">Управление рисками</div>
+          <p class="sc-desc">Детализированная карта рисков с приоритизацией по вероятности и ущербу. Взвешенные решения для защиты бизнеса.</p>
+        </div>
+      </div>
+      <div class="sc rv d2">
+        <div class="sc-img"><img src="аудит.png" alt="Аудит"/></div>
+        <div class="sc-body">
+          <div class="sc-num">03 — Audit</div>
+          <div class="sc-name">Аудит</div>
+          <p class="sc-desc">Комплексная проверка процессов и документации на производственных площадках. Конкретные шаги по повышению уровня зрелости.</p>
+        </div>
+      </div>
+      <div class="sc rv">
+        <div class="sc-img"><img src="сопровождение.png" alt="Сопровождение"/></div>
+        <div class="sc-body">
+          <div class="sc-num">04 — Support</div>
+          <div class="sc-name">Сопровождение</div>
+          <p class="sc-desc">Экспертная поддержка проектов от запуска до стабильной эксплуатации. Работа в связке с вашей командой.</p>
+        </div>
+      </div>
+      <div class="sc rv d1">
+        <div class="sc-img"><img src="обучение.png" alt="Обучение"/></div>
+        <div class="sc-body">
+          <div class="sc-num">05 — Training</div>
+          <div class="sc-name">Обучение</div>
+          <p class="sc-desc">Программы для руководителей и инженеров на основе реальных кейсов. Инструменты, которые работают сразу.</p>
+        </div>
+      </div>
+      <div class="sc rv d2">
+        <div class="sc-img"><img src="дистанционный_контроль.png" alt="Дистанционный контроль"/></div>
+        <div class="sc-body">
+          <div class="sc-num">06 — Remote Control</div>
+          <div class="sc-name">Дистанционный контроль</div>
+          <p class="sc-desc">Мониторинг объектов в режиме реального времени. Цифровые инструменты и ИИ-аналитика безопасности.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ▸ ПОСТРОЕНИЕ СИСТЕМЫ -->
+<section id="build">
+  <div class="wrap">
+    <div class="bld-grid">
+      <div class="bld-img rv">
+        <img src="Построение_системы.png" alt="Построение системы производственной безопасности"/>
+      </div>
+      <div class="rv d1">
+        <div class="lbl">03 — Методология</div>
+        <h2 class="ttl">Построение<br/><em>системы с нуля</em></h2>
+        <p class="txt">Создаём полноценный скелет системы производственной безопасности — от риск-менеджмента и нормативной базы до процессов обучения и KPI безопасности.</p>
+        <p class="txt">Результат — единая работающая система, интегрированная в бизнес-процессы компании.</p>
+        <ul class="dots">
+          <li>Риск-менеджмент: сбор данных, оценка, план снижения</li>
+          <li>Контроль и аудит на всех уровнях организации</li>
+          <li>Аварийная готовность и регламенты реагирования</li>
+          <li>KPI безопасности и мониторинг показателей</li>
+          <li>Обучение персонала и руководства</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ▸ ЦИФРОВОЙ КОНТРОЛЬ — split -->
+<div class="split rv" id="remote" style="border-top:1px solid var(--border-soft);">
+  <div class="sp-img"><img src="аудит.png" alt="Полевой аудит на объекте"/></div>
+  <div class="sp-body">
+    <div class="lbl">04 — Технологии</div>
+    <h2 class="ttl">Цифровой контроль<br/><em>на объекте</em></h2>
+    <p class="txt">Специалисты используют современные цифровые инструменты для проведения проверок и фиксации нарушений непосредственно на производственной площадке.</p>
+    <ul class="dots">
+      <li>Мобильные приложения для полевого аудита</li>
+      <li>Фотофиксация и цифровые чеклисты</li>
+      <li>Онлайн-отчётность в реальном времени</li>
+      <li>Интеграция с корпоративными системами</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ▸ ИИ-АНАЛИТИКА РИСКОВ — split reverse -->
+<div class="split rev rv" style="border-top:1px solid var(--border-soft);">
+  <div class="sp-img"><img src="управление_рисками.png" alt="ИИ-аналитика рисков"/></div>
+  <div class="sp-body">
+    <div class="lbl">05 — Аналитика</div>
+    <h2 class="ttl"><em>ИИ-аналитика</em><br/>рисков</h2>
+    <p class="txt">Применяем передовые модели для количественной оценки рисков. Трёхмерное представление факторов позволяет принимать точные управленческие решения.</p>
+    <ul class="dots">
+      <li>Вероятностный анализ сценариев</li>
+      <li>Матрица рисков с автоматическим обновлением</li>
+      <li>Предиктивные модели на основе реальных данных</li>
+      <li>Интеграция с ERP-системами предприятия</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ▸ ОБУЧЕНИЕ — полоса -->
+<div class="fullband rv" id="training" style="height:470px;">
+  <img src="обучение.png" alt="Обучение персонала"/>
+  <div class="fullband-ov">
+    <div class="fullband-ct">
+      <div class="lbl">06 — Обучение</div>
+      <h2 class="ttl">Программы<br/><em>подготовки</em></h2>
+      <p>Практические программы для руководителей и инженеров на основе реальных инцидентов и кейсов — прямо на вашем объекте.</p>
+      <a href="#contact" class="btn btn-t">Записаться на обучение</a>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ СОПРОВОЖДЕНИЕ — split -->
+<div class="split rv" style="border-top:1px solid var(--border-soft);">
+  <div class="sp-img"><img src="сопровождение.png" alt="Сопровождение производственного объекта"/></div>
+  <div class="sp-body">
+    <div class="lbl">07 — Сопровождение</div>
+    <h2 class="ttl">Экспертное<br/><em>сопровождение</em></h2>
+    <p class="txt">Берём на себя полную ответственность за безопасность объекта от стадии запуска до стабильной эксплуатации. Ваш постоянный партнёр в сфере безопасности.</p>
+    <ul class="dots">
+      <li>Постоянное присутствие эксперта на объекте</li>
+      <li>Реагирование на инциденты в режиме 24/7</li>
+      <li>Ежемесячные отчёты и рекомендации</li>
+      <li>Взаимодействие с регулирующими органами</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ▸ CTA / ПЛАТФОРМА -->
+<div class="cta-wrap rv">
+  <div class="cta-bg-img"><img src="куб.png" alt="Технологическая платформа"/></div>
+  <div class="cta-ct">
+    <div class="lbl" style="justify-content:center;">Технологическая платформа</div>
+    <h2 class="ttl">Цифровая экосистема<br/><em>производственной безопасности</em></h2>
+    <p>Комплексное решение, объединяющее все процессы управления безопасностью в единой интеллектуальной платформе.</p>
+    <div class="cta-btns">
+      <a href="#contact" class="btn btn-t">Получить демонстрацию</a>
+      <a href="#about" class="btn btn-g">Изучить методологию</a>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ КОНТАКТ -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="fg">
+      <div class="rv">
+        <div class="lbl">Связаться с нами</div>
+        <h2 class="ft">Готовы внедрить<br/><em>эталон?</em></h2>
+        <p class="fsub">Свяжитесь с нами для аудита текущей системы безопасности на вашем объекте. Первая консультация — бесплатно.</p>
+      </div>
+      <div class="rv d1">
+        <div class="frow">
+          <div class="fi"><input type="text" placeholder="Ваше имя"/></div>
+          <div class="fi"><input type="tel" placeholder="Телефон"/></div>
+        </div>
+        <div class="fi" style="margin-bottom:12px;"><input type="email" placeholder="Email"/></div>
+        <div class="fi" style="margin-bottom:12px;"><textarea rows="4" placeholder="Опишите вашу задачу..."></textarea></div>
+        <button class="fsb" onclick="send(this)">Отправить запрос →</button>
+      </div>
+    </div>
+    <div class="fbot">
+      <span>© 2025 Эталон-ПБ. Все права защищены.</span>
+      <span>Производственная безопасность · Охрана труда · Экологическая безопасность</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }),
+    { threshold: 0.07 }
+  );
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  // Form
+  function send(btn) {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Запрос отправлен!';
+    btn.style.background = '#1e8c7a';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.disabled = false; }, 3000);
+  }
+</script>
+</body>
+</html>
